@@ -3,6 +3,7 @@ import { Moon, Sun } from 'lucide-react'
 
 import { api } from "~/utils/api";
 import { useTheme } from "next-themes";
+import { PageContainer } from "~/components/layout/PageContainer";
 
 export default function Home() {
   const hello = api.post.hello.useQuery({ text: "from tRPC" });
@@ -10,7 +11,7 @@ export default function Home() {
   const { setTheme } = useTheme()
 
   return (
-    <>
+    <PageContainer withHeader={true} withFooter={false}>
       <main className="flex min-h-screen flex-col items-center justify-center gap-y-10">
         <p className="text-3xl text-gray-500 dark:text-green-700">Helo World</p>
         <Button>Ayo Pukul aku</Button>
@@ -21,6 +22,7 @@ export default function Home() {
           <Sun />
         </Button>
       </main>
-    </>
+
+    </PageContainer>
   );
 }
