@@ -11,7 +11,7 @@ type PageContainerProps = {
 export const PageContainer = forwardRef<
    HTMLElement,
    React.HTMLAttributes<HTMLElement> & PageContainerProps
->(({ className, children, withHeader = true, withFooter = true, ...props }, ref,) => {
+>(({ className, children, withHeader = true, withFooter = true, ...props }, ref) => {
    return (
       <div className="h-full w-full">
          <HeadMetaData />
@@ -30,3 +30,5 @@ export const PageContainer = forwardRef<
       </div >
    )
 })
+
+PageContainer.displayName = "PageContainer"
