@@ -1,4 +1,3 @@
-import { type } from 'os'
 import { z } from 'zod'
 import { EmailSchemas, PasswordSchemas } from '~/schemas/auth'
 

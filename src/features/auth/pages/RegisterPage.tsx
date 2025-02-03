@@ -1,4 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
 import { PageContainer } from "~/components/layout/PageContainer";
 import { SectionContainer } from "~/components/layout/SectionContainer";
 import { Button } from "~/components/ui/button";
@@ -10,12 +12,10 @@ import {
    CardTitle,
 } from "~/components/ui/card";
 import { Form } from "~/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod"
-import { RegisterFormSchema, registerFormSchema } from "../forms/register";
-import { useState } from "react";
-import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
 import { RegisterFormInert } from "../components/RegisterFormIner";
+import { RegisterFormSchema, registerFormSchema } from "../forms/register";
+import Link from "next/link";
+import { supabase } from '~/lib/supabase/client'
 
 const RegisterPage = () => {
    const form = useForm<RegisterFormSchema>({ resolver: zodResolver(registerFormSchema) })
@@ -23,6 +23,7 @@ const RegisterPage = () => {
    const handleOnRegister = (values: RegisterFormSchema) => {
       alert("register succes!")
    }
+
    return (
       <PageContainer>
          <SectionContainer

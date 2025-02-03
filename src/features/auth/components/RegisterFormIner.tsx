@@ -4,6 +4,7 @@ import { Button } from "~/components/ui/button"
 import { Checkbox } from "~/components/ui/checkbox"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form"
 import { Input } from "~/components/ui/input"
+
 import { RegisterFormSchema } from "../forms/register"
 
 type RegisterFormInertProps = {
@@ -13,6 +14,7 @@ type RegisterFormInertProps = {
 export const RegisterFormInert = (props: RegisterFormInertProps) => {
    const form = useFormContext<RegisterFormSchema>()
    const [showPassword, setShowPassword] = useState<boolean>(false)
+   
    return (
       <form
          onSubmit={form.handleSubmit(props.onRegisterSubmit)}
