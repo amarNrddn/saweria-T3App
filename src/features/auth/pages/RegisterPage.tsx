@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { PageContainer } from "~/components/layout/PageContainer";
@@ -14,14 +15,22 @@ import {
 import { Form } from "~/components/ui/form";
 import { RegisterFormInert } from "../components/RegisterFormIner";
 import { RegisterFormSchema, registerFormSchema } from "../forms/register";
-import Link from "next/link";
-import { supabase } from '~/lib/supabase/client'
+import { api } from "~/utils/api";
 
 const RegisterPage = () => {
    const form = useForm<RegisterFormSchema>({ resolver: zodResolver(registerFormSchema) })
 
+   const { mutate: registerUser } = api.auth.register.useMutation({
+      onSuccess: () => { 
+         alert("succes user Registerd !")
+      },
+      onError: () => { 
+         alert('Error registerd')
+      }
+   })
+
    const handleOnRegister = (values: RegisterFormSchema) => {
-      alert("register succes!")
+      registerUser(values)
    }
 
    return (

@@ -20,7 +20,8 @@ model Post {
     @@index([name])
 }
 
-model Profil {
+model Profile {
     userId String @id
     email  String @unique
+    username String @unique
 }
