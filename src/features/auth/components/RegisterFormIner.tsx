@@ -8,13 +8,14 @@ import { Input } from "~/components/ui/input"
 import { RegisterFormSchema } from "../forms/register"
 
 type RegisterFormInertProps = {
-   onRegisterSubmit: (values: RegisterFormSchema) => void
+   onRegisterSubmit: (values: RegisterFormSchema) => void;
+   isLoading: boolean
 }
 
 export const RegisterFormInert = (props: RegisterFormInertProps) => {
    const form = useFormContext<RegisterFormSchema>()
    const [showPassword, setShowPassword] = useState<boolean>(false)
-   
+
    return (
       <form
          onSubmit={form.handleSubmit(props.onRegisterSubmit)}
@@ -54,7 +55,7 @@ export const RegisterFormInert = (props: RegisterFormInertProps) => {
             Show Password
          </label>
 
-         <Button className="w-full mt-4">Buat Akun</Button>
+         <Button disabled={props.isLoading} className="w-full mt-4">Buat Akun</Button>
       </form>
    )
 }
