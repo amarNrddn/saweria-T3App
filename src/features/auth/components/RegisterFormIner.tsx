@@ -9,7 +9,9 @@ import { RegisterFormSchema } from "../forms/register"
 
 type RegisterFormInertProps = {
    onRegisterSubmit: (values: RegisterFormSchema) => void;
-   isLoading: boolean
+   isLoading: boolean;
+   showPassword?: boolean;
+   button?: string
 }
 
 export const RegisterFormInert = (props: RegisterFormInertProps) => {
@@ -47,15 +49,17 @@ export const RegisterFormInert = (props: RegisterFormInertProps) => {
                </FormItem>
             )}
          />
-         <label className="flex items-center gap-2 mt-4">
-            <Checkbox
-               checked={showPassword}
-               onCheckedChange={(checked) => setShowPassword(!!checked)}
-            />
-            Show Password
-         </label>
+         {props.showPassword && (
+            <label className="flex items-center gap-2 mt-4">
+               <Checkbox
+                  checked={showPassword}
+                  onCheckedChange={(checked) => setShowPassword(!!checked)}
+               />
+               Show Password
+            </label>
+         )}
 
-         <Button disabled={props.isLoading} className="w-full mt-4">Buat Akun</Button>
+         <Button disabled={props.isLoading} className="w-full mt-4">{props.button ?? "Buat Akun"}</Button>
       </form>
    )
 }

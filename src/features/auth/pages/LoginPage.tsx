@@ -1,24 +1,18 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
-import { PageContainer } from "~/components/layout/PageContainer";
-import { SectionContainer } from "~/components/layout/SectionContainer";
-import { Button } from "~/components/ui/button";
-import {
-   Card,
-   CardContent,
-   CardFooter,
-   CardHeader,
-   CardTitle,
-} from "~/components/ui/card";
-import { Form } from "~/components/ui/form";
-import { RegisterFormInert } from "../components/RegisterFormIner";
-import { RegisterFormSchema, registerFormSchema } from "../forms/register";
-import { api } from "~/utils/api";
-import { toast } from "sonner";
+import { PageContainer } from "~/components/layout/PageContainer"
+import { SectionContainer } from "~/components/layout/SectionContainer"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
+import { Form } from "~/components/ui/form"
+import { RegisterFormInert } from "../components/RegisterFormIner"
+import { Button } from "~/components/ui/button"
+import { FcGoogle } from "react-icons/fc"
+import Link from "next/link"
+import { useForm } from "react-hook-form"
+import { RegisterFormSchema, registerFormSchema } from "../forms/register"
+import { toast } from "sonner"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { api } from "~/utils/api"
 
-const RegisterPage = () => {
+const LoginPage = () => {
    const form = useForm<RegisterFormSchema>({ resolver: zodResolver(registerFormSchema) })
 
    const { mutate: registerUser, isPending: registerUserIsPending } = api.auth.register.useMutation({
@@ -32,10 +26,9 @@ const RegisterPage = () => {
       }
    })
 
-   const handleOnRegister = (values: RegisterFormSchema) => {
+   const handleOnLogin = (values: RegisterFormSchema) => {
       registerUser(values)
    }
-
    return (
       <PageContainer>
          <SectionContainer
@@ -44,15 +37,15 @@ const RegisterPage = () => {
          >
             <Card className="w-full max-w-[480px] self-center">
                <CardHeader className="flex flex-col justify-center items-center">
-                  <CardTitle className="text-2xl">Buat Akun</CardTitle>
+                  <CardTitle className="text-2xl">Silahkan Logi👋</CardTitle>
                   <p className="text-muted-foreground">Sawer kreator kesukaanmu</p>
                </CardHeader>
                <CardContent>
                   <Form {...form} >
                      <RegisterFormInert
                         isLoading={registerUserIsPending}
-                        onRegisterSubmit={handleOnRegister}
-                        showPassword
+                        onRegisterSubmit={handleOnLogin}
+                        button="Login"
                      />
                   </Form>
                </CardContent>
@@ -66,11 +59,11 @@ const RegisterPage = () => {
 
                   <Button variant="secondary" className="w-full">
                      <FcGoogle />
-                     Login akun dengan Google
+                     Buat akun dengan Google
                   </Button>
 
                   <p className="text-muted-foreground">
-                     Sudah punya akun? <Link href={"/login"} className="text-purple-600 font-bold">Login</Link>
+                     Belum punya akun? <Link href={"/register"} className="text-purple-600 font-bold">Buat</Link>
                   </p>
                </CardFooter>
             </Card>
@@ -79,4 +72,4 @@ const RegisterPage = () => {
    )
 }
 
-export default RegisterPage
+export default LoginPage
