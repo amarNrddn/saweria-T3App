@@ -11,6 +11,9 @@ import { RegisterFormSchema, registerFormSchema } from "../forms/register"
 import { toast } from "sonner"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { api } from "~/utils/api"
+import { supabase } from "~/lib/supabase/client"
+import { AuthError } from "@supabase/supabase-js"
+import { SupabaseAuthErrorCode } from "~/lib/supabase/authErrorCodes"
 
 const LoginPage = () => {
    const form = useForm<RegisterFormSchema>({ resolver: zodResolver(registerFormSchema) })
@@ -26,8 +29,28 @@ const LoginPage = () => {
       }
    })
 
-   const handleOnLogin = (values: RegisterFormSchema) => {
-      registerUser(values)
+   const handleOnLogin = async (values: RegisterFormSchema) => {
+      try {
+         const { error } = await supabase.auth.signInWithPassword({
+            email: values.email,
+            password: values.password
+         })
+
+         if (error) throw error
+
+      } catch (error) {
+         switch ((error as AuthError).code) {
+            case SupabaseAuthErrorCode.invalid_credentials:
+               form.setError("email", { message: "Email atau password salah" });
+               form.setError("password", { message: "Email atau password salah", });
+               break;
+            case SupabaseAuthErrorCode.email_not_confirmed:
+               form.setError("email", { message: "Email belum diverifikasi" });
+               break;
+            default:
+               toast.error("Sebuah kesalahan terjadi, coba lagi beberapa saat.");
+         }
+      }
    }
    return (
       <PageContainer>
